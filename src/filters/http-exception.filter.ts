@@ -9,7 +9,7 @@ import { env } from '../configs/env.config';
  * @description 개발자가 의도적으로 발생시킨 HttpException을 처리하는 미들웨어
  * @description HttpException이 아닌 다른 에러는 다음 미들웨어로 넘김
  */
-export const httpExceptionMiddleware = (): ErrorRequestHandler => {
+export const httpExceptionFilter = (): ErrorRequestHandler => {
   return async (err: TError, req, res, next) => {
     if (env.MODE === 'dev') {
       console.log('error in httpExceptionMiddleware');

@@ -47,3 +47,9 @@ testRouter.get(
     await testService.excuteInternalServerErrorException();
   }),
 );
+
+testRouter.get('/', (req, res, next) => {
+  const a = 'a';
+
+  return a;
+});

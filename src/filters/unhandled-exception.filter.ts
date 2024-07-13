@@ -7,7 +7,7 @@ import { ErrorRequestHandler } from 'express';
  * Unhandled Exception Middleware
  * @description 처리되지 않은 예외를 처리하는 미들웨어
  */
-export const unhandledExceptionMiddleware = (): ErrorRequestHandler => {
+export const unhandledExceptionFilter = (): ErrorRequestHandler => {
   return async (err: Error, req, res, next) => {
     if (env.MODE === 'dev') {
       console.log('error in unhandledExceptionMiddleware');
