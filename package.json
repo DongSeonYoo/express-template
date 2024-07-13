@@ -40,7 +40,9 @@
     "prettier": "^3.2.5",
     "reflect-metadata": "^0.2.1",
     "typedi": "^0.10.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "winston": "^3.13.1",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
