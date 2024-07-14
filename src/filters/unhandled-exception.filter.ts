@@ -1,14 +1,14 @@
 import { env } from '../configs/env.config';
-import { logger } from '../configs/logger.config';
 import { IExceptionResponse } from '../interfaces/repsonse.interface';
 import { HttpStatus } from '../utils/http-status.util';
 import { ErrorRequestHandler } from 'express';
+import { Logger } from 'winston';
 
 /**
  * Unhandled Exception Middleware
  * @description 처리되지 않은 예외를 처리하는 미들웨어
  */
-export const unhandledExceptionFilter = (): ErrorRequestHandler => {
+export const unhandledExceptionFilter = (logger: Logger): ErrorRequestHandler => {
   return async (err: Error, req, res, next) => {
     if (env.MODE === 'dev') {
       logger.debug('unhandledExceptionFilter excute', err);

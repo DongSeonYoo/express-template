@@ -2,6 +2,7 @@ import express from 'express';
 import { notFoundExceptionFilter } from '../../filters/not-found-exception.filter';
 import { httpExceptionFilter } from '../../filters/http-exception.filter';
 import { unhandledExceptionFilter } from '../../filters/unhandled-exception.filter';
+import { logger } from '../../configs/logger.config';
 
 /**
  * @description 에러 미들웨어 설정
@@ -9,5 +10,5 @@ import { unhandledExceptionFilter } from '../../filters/unhandled-exception.filt
 export function setExceptionFilter(app: express.Application) {
   app.use(notFoundExceptionFilter());
   app.use(httpExceptionFilter());
-  app.use(unhandledExceptionFilter());
+  app.use(unhandledExceptionFilter(logger));
 }
