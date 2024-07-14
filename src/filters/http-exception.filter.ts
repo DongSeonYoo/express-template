@@ -3,6 +3,7 @@ import { TError } from '../interfaces/error.type';
 import { HttpException } from '../utils/custom-error.util';
 import { IExceptionResponse } from '../interfaces/repsonse.interface';
 import { env } from '../configs/env.config';
+import { logger } from '../configs/logger.config';
 
 /**
  * Http Exception Middleware
@@ -11,16 +12,13 @@ import { env } from '../configs/env.config';
  */
 export const httpExceptionFilter = (): ErrorRequestHandler => {
   return async (err: TError, req, res, next) => {
-    if (env.MODE === 'dev') {
-      console.log('error in httpExceptionMiddleware');
-      console.log(err);
-    }
-
-    if (!(err instanceof HttpException)) {
+    if (!(err instanceof HttpException) || err.statusCode === 500) {
       return next(err);
     }
 
-    // 상황에 따른 로깅 처리...
+    if (env.MODE === 'dev') {
+      logger.info('httpexceptionfilter excute');
+    }
 
     // 에러 응답형식에 맞게 처리
     const errorResponse: IExceptionResponse = {
