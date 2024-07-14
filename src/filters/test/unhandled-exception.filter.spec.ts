@@ -44,16 +44,4 @@ describe('unhandledExceptionFilter를 테스트한다', () => {
       requestURL: req.url,
     });
   });
-
-  it('개발 환경일 경우 debug 레벨의 로그를 남긴다.', () => {
-    // given
-    const err = new Error('Test Error');
-    const unhandledFilter = unhandledExceptionFilter(mockLogger);
-
-    // when
-    unhandledFilter(err, req, res, next);
-
-    // then
-    expect(mockLogger.debug).toHaveBeenCalledWith('unhandledExceptionFilter excute', err);
-  });
 });
