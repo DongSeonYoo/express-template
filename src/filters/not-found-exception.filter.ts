@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
-import { asyncWrap } from '../utils/async-wrap.util';
-import { NotFoundException } from '../utils/custom-error.util';
+import { HttpStatus } from '../utils/http-status.util';
+import { IExceptionResponse } from '../interfaces/repsonse.interface';
 
 /**
  * Not Found Exception Middleware
@@ -8,7 +8,14 @@ import { NotFoundException } from '../utils/custom-error.util';
  * @throws NotFoundException
  */
 export const notFoundExceptionFilter = (): RequestHandler => {
-  return asyncWrap(async (req, res, next) => {
-    throw new NotFoundException('api Not found');
-  });
+  return async (req, res, next) => {
+    const response: IExceptionResponse = {
+      statusCode: HttpStatus.NOT_FOUND,
+      message: 'api Not found',
+      timestamp: new Date(),
+      requestURL: req.url,
+    };
+
+    return res.status(response.statusCode).send(response);
+  };
 };
