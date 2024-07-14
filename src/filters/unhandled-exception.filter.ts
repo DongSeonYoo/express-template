@@ -18,6 +18,8 @@ export const unhandledExceptionFilter = (logger: Logger): ErrorRequestHandler =>
      * 클라이언트한테는 서버 내부 에러를 굳이 보내줄 필요가 없음
      * warn레벨의 로그로 남기고 에러 응답을 보내주는게 좋을것 같음
      */
+    logger.error(`[ERROR] - [${new Date()}] [${req.method} ${req.url}] ${err}\n`);
+
     const errorResponse: IExceptionResponse = {
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
       message: 'Internal Server Error',
