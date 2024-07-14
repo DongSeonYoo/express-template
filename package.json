@@ -69,19 +69,21 @@
     "tsc-watch": "^6.0.4",
     "typescript": "^5.3.3"
   },
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "test"
-    ],
+    "jest": {
     "moduleFileExtensions": [
       "js",
       "json",
       "ts"
     ],
-    "roots": [
-      "test"
+    "rootDir": "./",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
     ],
-    "testRegex": ".spec.ts$"
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }
