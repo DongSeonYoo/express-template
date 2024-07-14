@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express';
 import { asyncWrap } from '../utils/async-wrap.util';
 import { NotFoundException } from '../utils/custom-error.util';
-import { env } from '../configs/env.config';
 
 /**
  * Not Found Exception Middleware
@@ -10,10 +9,6 @@ import { env } from '../configs/env.config';
  */
 export const notFoundExceptionFilter = (): RequestHandler => {
   return asyncWrap(async (req, res, next) => {
-    if (env.MODE === 'dev') {
-      console.log('error in notFoundExceptionMiddleware');
-    }
-
     throw new NotFoundException('api Not found');
   });
 };

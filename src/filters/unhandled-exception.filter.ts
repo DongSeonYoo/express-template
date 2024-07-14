@@ -1,4 +1,5 @@
 import { env } from '../configs/env.config';
+import { logger } from '../configs/logger.config';
 import { IExceptionResponse } from '../interfaces/repsonse.interface';
 import { HttpStatus } from '../utils/http-status.util';
 import { ErrorRequestHandler } from 'express';
@@ -10,8 +11,7 @@ import { ErrorRequestHandler } from 'express';
 export const unhandledExceptionFilter = (): ErrorRequestHandler => {
   return async (err: Error, req, res, next) => {
     if (env.MODE === 'dev') {
-      console.log('error in unhandledExceptionMiddleware');
-      console.log(err);
+      logger.debug('unhandledExceptionFilter excute', err);
     }
 
     /**
