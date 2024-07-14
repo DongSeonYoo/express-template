@@ -33,8 +33,8 @@ export class UnauthorizedException extends HttpException {
 }
 
 /**
- * @description ForbiddenException
- * @status 403
+ * @description NotFoundException
+ * @status 404
  */
 export class NotFoundException extends HttpException {
   constructor(message: string) {
