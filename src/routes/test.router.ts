@@ -22,6 +22,20 @@ testRouter.get(
 );
 
 /**
+ * @endpoint GET /test/internalServerErrorException
+ * @description internalServerErrorException을 발생시키는 테스트 API
+ * @throws HttpException (internalServerErrorException)
+ *
+ * @result unhandledExceptionFilter로 빠져서 500으로 응답해야 함
+ */
+testRouter.get(
+  '/internalServerErrorException',
+  asyncWrap(async (req, res, next) => {
+    await testService.excuteInternalServerErrorException();
+  }),
+);
+
+/**
  * @endpoint GET /test/httpException
  * @description httpException을 발생시키는 테스트 API
  * @throws HttpException (BadRequestException)
