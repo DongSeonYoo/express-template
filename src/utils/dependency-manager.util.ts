@@ -1,7 +1,7 @@
 import Container from 'typedi';
 
 export namespace DependencyManager {
-  export function getContainer(target: new (...args: any[]) => any) {
+  export function getContainer<T>(target: new (...args: any[]) => T) {
     return Container.get(target);
   }
 }
