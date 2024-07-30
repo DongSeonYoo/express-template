@@ -7,7 +7,8 @@ import { logger } from '../../configs/logger.config';
 /**
  * @description 에러 미들웨어 설정
  */
-export function setExceptionFilter(app: express.Application) {
+export function SetExceptionFilter(app: express.Application) {
+  logger.info('Exception Filter Init');
   app.use(notFoundExceptionFilter());
   app.use(httpExceptionFilter());
   app.use(unhandledExceptionFilter(logger));

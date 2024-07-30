@@ -7,7 +7,8 @@ import { logger } from '../../configs/logger.config';
 /**
  * @description 전역 미들웨어 설정
  */
-export function setGlobalMiddleware(app: express.Application) {
+export function SetGlobalMiddleware(app: express.Application) {
+  logger.info('Global Middleware Init');
   app.use(express.json());
   app.use(cookieParser());
   app.use(
