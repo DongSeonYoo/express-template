@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { testService } from '../utils/container.util';
+import { DependencyManager } from '../utils/dependency-manager.util';
 import { asyncWrap } from '../utils/async-wrap.util';
+import { TestService } from '../services/test.service';
 
 export const testRouter = Router();
 
-console.log('init test router');
+const testService = DependencyManager.getContainer(TestService);
 
 /**
  * @endpoint GET /test/prismaClientKnownRequestError
@@ -28,7 +29,7 @@ testRouter.get(
  * @result HttpExceptionMiddleware로 빠져서 400으로 응답해야 함
  */
 testRouter.get(
-  '/httpException(BadRequestException)',
+  '/httpException',
   asyncWrap(async (req, res, next) => {
     await testService.excuteHttpException();
   }),
@@ -42,14 +43,23 @@ testRouter.get(
  * @result HttpExceptionMiddleware로 빠져서 500으로 응답해야 함
  */
 testRouter.get(
-  '/httpException(InternalServerErrorException)',
+  '/httpException',
   asyncWrap(async (req, res, next) => {
     await testService.excuteInternalServerErrorException();
   }),
 );
 
-testRouter.get('/', (req, res, next) => {
-  const a = 'a';
+/**
+ * @endpoint GET /test/success
+ * @description 성공 응답을 반환하는 테스트 API
+ *
+ * @result 200으로 응답해야 함
+ */
+testRouter.get(
+  '/success',
+  asyncWrap(async (req, res, next) => {
+    const result = await testService.successTest();
 
-  return a;
-});
+    return res.send(result);
+  }),
+);

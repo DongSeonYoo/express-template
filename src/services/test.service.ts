@@ -23,4 +23,12 @@ export class TestService {
   async excuteInternalServerErrorException() {
     throw new InternalServerErrorException('Excute InternalServerErrorException');
   }
+
+  async successTest() {
+    return await this.prismaService.user_tb.findFirst({
+      where: {
+        idx: 2,
+      },
+    });
+  }
 }
