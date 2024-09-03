@@ -9,7 +9,6 @@ import { SetInterceptors } from './utils/loaders/interceptor.loader';
 
 async function startServer() {
   const app = express();
-  const HTTP_PORT = env.HTTP_PORT;
 
   SetGlobalMiddleware(app);
   SetInterceptors(app);
@@ -17,9 +16,11 @@ async function startServer() {
   SetRouteMiddleware(app);
   SetExceptionFilter(app);
 
-  app.listen(HTTP_PORT, '0.0.0.0', () => {
-    logger.log('info', `server on ${HTTP_PORT}`);
-  });
+  return app;
 }
 
-startServer();
+startServer().then((app) => {
+  app.listen(env.HTTP_PORT, '127.0.0.1', () => {
+    logger.log('info', `server on ${env.HTTP_PORT}`);
+  });
+});
