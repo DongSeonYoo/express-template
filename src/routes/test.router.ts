@@ -50,20 +50,6 @@ testRouter.get(
 );
 
 /**
- * @endpoint GET /test/internerServerException
- * @description InternerServerException을 발생시키는 테스트 API
- * @throws HttpException (InternalServerErrorException)
- *
- * @result HttpExceptionMiddleware로 빠져서 500으로 응답해야 함
- */
-testRouter.get(
-  '/httpException',
-  asyncWrap(async (req, res, next) => {
-    await testService.excuteInternalServerErrorException();
-  }),
-);
-
-/**
  * @endpoint GET /test/success
  * @description 성공 응답을 반환하는 테스트 API
  *
