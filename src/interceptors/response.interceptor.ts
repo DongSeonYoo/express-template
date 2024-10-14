@@ -6,16 +6,16 @@ import { ISuccessResponse } from '../interfaces/repsonse.interface';
  *
  * @returns RequestHandler
  */
-export function responseInterceptor(): RequestHandler {
+export function responseInterceptor<T>(): RequestHandler {
   return (req: Request, res: Response, next: NextFunction) => {
     const originalSend = res.send;
 
-    res.send = function (body: any): Response {
+    res.send = function (body: T): Response {
       if (this.get('X-Response-Processed')) {
         return originalSend.call(this, body);
       }
 
-      const responseData = prepareResponseData(this.statusCode, body, req.url);
+      const responseData = prepareResponseData<T>(this.statusCode, body, req.url);
 
       this.set('X-Response-Processed', 'true');
       return originalSend.call(this, responseData);
@@ -40,7 +40,7 @@ function prepareResponseData<T>(
   statusCode: number,
   body: any,
   requestURL: string,
-): ISuccessResponse<T> {
+): ISuccessResponse<T> | T{
   if (statusCode === 200) {
     return {
       data: body,
@@ -50,5 +50,6 @@ function prepareResponseData<T>(
       timestamp: new Date(),
     };
   }
+  
   return body;
 }
