@@ -38,18 +38,18 @@ export function responseInterceptor<T>(): RequestHandler {
  */
 function prepareResponseData<T>(
   statusCode: number,
-  body: any,
+  body: T,
   requestURL: string,
-): ISuccessResponse<T> | T{
+): ISuccessResponse<T> | T {
   if (statusCode === 200) {
     return {
-      data: body,
       statusCode,
       message: '',
-      requestURL,
       timestamp: new Date(),
+      requestURL,
+      data: body,
     };
   }
-  
+
   return body;
 }
