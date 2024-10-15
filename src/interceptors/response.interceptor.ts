@@ -1,6 +1,8 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { ISuccessResponse } from '../interfaces/repsonse.interface';
 
+const processedResponse = new WeakMap<Response, boolean>();
+
 /**
  * 응답 데이터를 정제하는 인터셉터
  *
@@ -11,13 +13,13 @@ export function responseInterceptor<T>(): RequestHandler {
     const originalSend = res.send;
 
     res.send = function (body: T): Response {
-      if (this.get('X-Response-Processed')) {
+      if (processedResponse.get(this)) {
         return originalSend.call(this, body);
       }
 
       const responseData = prepareResponseData<T>(this.statusCode, body, req.url);
 
-      this.set('X-Response-Processed', 'true');
+      processedResponse.set(this, true);
       return originalSend.call(this, responseData);
     };
 
