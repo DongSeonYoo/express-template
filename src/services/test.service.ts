@@ -1,6 +1,10 @@
 import { Service } from 'typedi';
 import { PrismaService } from './prisma.service';
-import { BadRequestException, InternalServerErrorException } from '../utils/custom-error.util';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  NotFoundException,
+} from '../utils/custom-error.util';
 
 @Service()
 export class TestService {
@@ -30,5 +34,22 @@ export class TestService {
         idx: 2,
       },
     });
+  }
+
+  async getUserProfile(userIdx: number) {
+    return await this.prismaService.user_tb
+      .findFirst({
+        where: {
+          idx: userIdx,
+          deleted_at: null,
+        },
+      })
+      .then((res) => {
+        if (!res) {
+          throw new NotFoundException('profile not found');
+        }
+
+        return res;
+      });
   }
 }
